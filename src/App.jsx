@@ -25,38 +25,7 @@ const DEFAULT_PROGRAM = {
     exercises: [
       { id: 'squat', name: 'High Bar Squat', sets: 3, range: '6-8', note: 'Deep flexion.' },
       { id: 'rdl', name: 'Romanian Deadlift', sets: 3, range: '8-10', note: 'Push hips back.' },
-      { id: 'legpress', name: 'Leg Press', sets: 3, range: '10-12', note: 'Feet low/close. Constant tension.' },
-      { id: 'legext', name: 'Leg Extension', sets: 3, range: '12-15', note: '1s hold at top.' },
-      { id: 'calf_stand', name: 'Standing Calf Raise', sets: 4, range: '10-15', note: 'Slow eccentric.' },
-      { id: 'abs_cable', name: 'Cable Crunch', sets: 3, range: '10-15', note: 'Flex spine.' },
-    ]
-  },
-  upperB: {
-    id: 'upperB',
-    title: "Upper Body B",
-    subtitle: "Hypertrophy & Width",
-    color: "bg-indigo-600",
-    exercises: [
-      { id: 'incline_bench', name: 'Incline DB Press', sets: 3, range: '8-12', note: '30 degree angle.' },
-      { id: 'lat_iso', name: 'Single Arm Lat Pulldown', sets: 3, range: '10-12', note: 'Deep stretch.' },
-      { id: 'lat_raise', name: 'Cable Lateral Raise', sets: 4, range: '12-15', note: 'Constant tension.' },
-      { id: 'fly', name: 'Pec Deck/Cable Fly', sets: 3, range: '12-15', note: 'Focus on squeeze.' },
-      { id: 'tri_push', name: 'Tricep Pushdown', sets: 3, range: '12-15', note: 'Elbows pinned.' },
-      { id: 'hammer', name: 'Hammer Curls', sets: 3, range: '10-12', note: 'For forearm thickness.' },
-    ]
-  },
-  lowerB: {
-    id: 'lowerB',
-    title: "Lower Body B",
-    subtitle: "Hinge & Posterior",
-    color: "bg-orange-600",
-    exercises: [
-      { id: 'legcurl', name: 'Seated Leg Curl', sets: 3, range: '10-12', note: 'Pre-fatigue hamstrings.' },
-      { id: 'deadlift', name: 'Deadlift', sets: 3, range: '5-8', note: 'Reset every rep.' },
-      { id: 'split_squat', name: 'Bulgarian Split Squat', sets: 3, range: '8-12', note: 'Lean forward for glutes.' },
-      { id: 'legext_high', name: 'Leg Extension', sets: 3, range: '15-20', note: 'Burnout sets.' },
-      { id: 'calf_seat', name: 'Seated Calf Raise', sets: 3, range: '15-20', note: 'Targets soleus.' },
-      { id: 'plank', name: 'Plank/Ab Wheel', sets: 3, range: 'Failure', note: 'Core stability.' },
+      { id: 'split', name: 'Bulgarian Split Squat', sets: 3, range: '10-12', note: 'Stretch glute at bottom.' },
     ]
   }
 };
@@ -169,6 +138,7 @@ const App = () => {
 
   const saveEdit = (workoutId, exId) => {
     const newProgram = { ...program };
+
     const exerciseIndex = newProgram[workoutId].exercises.findIndex(e => e.id === exId);
 
     if (exerciseIndex > -1) {
@@ -254,8 +224,8 @@ const App = () => {
 
     return (
       <div className="pb-32 bg-slate-50 min-h-screen">
-        <div className={`sticky top-0 z-20 ${workout.color} text-white px-4 py-4 shadow-md flex items-center gap-4`}>
-          <button onClick={() => setView('home')} className="p-1 hover:bg-white/20 rounded-full">
+        <div className={`sticky top-0 z-20 ${workout.color} text-white px-4 py-4 shadow-md flex items-center gap-4`}> 
+          <button onClick={() => setView('home')} className="p-1 hover:bg-white/20 rounded-full"> 
             <ChevronLeft size={24} />
           </button>
           <div>
@@ -275,7 +245,7 @@ const App = () => {
                 {/* Exercise Header */}
                 <div className="p-4 border-b border-slate-100 bg-slate-50/50">
                   {!isEditing ? (
-                    <>
+                    <> 
                       <div className="flex justify-between items-start mb-1">
                         <h3 className="font-bold text-slate-800 text-lg pr-8">{ex.name}</h3>
                         <button onClick={() => startEditing(ex)} className="text-slate-400 hover:text-blue-600 p-1">
@@ -350,15 +320,20 @@ const App = () => {
                           )}
                         </div>
                         <div className="col-span-5 flex gap-1">
+                          {/* Updated input fields begin here */}
                           <input
-                            type="number"
+                            type="text"
+                            inputMode="decimal"
+                            pattern="[0-9]*"
                             placeholder="kg"
                             className="w-full bg-white border border-slate-200 rounded py-1.5 text-center text-sm font-bold focus:border-blue-500 outline-none"
                             value={currentSet.weight}
                             onChange={(e) => handleInputChange(ex.id, setIdx, 'weight', e.target.value)}
                           />
                           <input
-                            type="number"
+                            type="text"
+                            inputMode="numeric"
+                            pattern="[0-9]*"
                             placeholder="reps"
                             className="w-full bg-white border border-slate-200 rounded py-1.5 text-center text-sm font-bold focus:border-blue-500 outline-none"
                             value={currentSet.reps}
